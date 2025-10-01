@@ -1,0 +1,49 @@
+﻿@model EProject.NETCore.Models.User
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/userInformation.css" />
+}
+@{
+    var notification = TempData["Notification"] as string;
+}
+
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+<section class="info_user">
+    <div class="info_main">
+        <div class="main_title">
+            <p>Information</p>
+        </div>
+        <form asp-action="UserInformation" asp-controller="User" method="post">
+            <div class="info_left">
+                <a asp-action="changeEmail" asp-controller="User" asp-route-userId="@Model.Id">Change Email</a>
+                <a asp-action="changePassword" asp-controller="User" asp-route-userId="@Model.Id">Change Password</a>
+            </div>
+            <div class="info_right">
+                <div class="info_name">
+                    <label for="fullname">Full name:</label>
+                    <input type="text" name="fullname" id="fullname" value="@Model.Fullname" />
+                    @Html.ValidationMessage("fullname", "", new { @class = "text-danger" })
+                </div>
+                <div class="info_username">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" value="@Model.Username" />
+                    @Html.ValidationMessage("username", "", new { @class = "text-danger" })
+                </div>
+                <div class="info_email">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" value="@Model.Email" readonly />
+                </div>
+                <div class="info_password">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" value="***********" readonly />
+                </div>
+                <div class="info_save">
+                    <button type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

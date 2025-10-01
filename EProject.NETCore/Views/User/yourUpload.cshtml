@@ -1,0 +1,77 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<EProject.NETCore.Models.Guidance>
+@{
+    var notification = TempData["Notification"] as string;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/yourUpload.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+<section class="recipe_sent">
+    <div class="sent_main">
+        <div class="sent_title">
+            <a href="/User/UserInformation/@ViewData["UserId"]">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <h1>Your Upload</h1>
+            <div></div>
+        </div>
+        <div class="sent_list">
+            @foreach (var guidance in Model)
+            {
+                <div class="sent_item">
+                    <div class="item_type">
+                        <p>@(guidance.Type ? "Tip" : "Recipe")</p>
+                    </div>
+                    <div class="item_left">
+                        <img src="@guidance.Img" alt="">
+                        <div class="left_content">
+                            <p>@guidance.Title</p>
+                            <p class="time_left">Time Up: @guidance.CreatedDate.ToString("MM/dd/yyyy")</p>
+                            @if (guidance.UpdatedDate.HasValue)
+                            {
+                                <p class="time_left">Update At: @guidance.UpdatedDate.Value.ToString("MM/dd/yyyy")</p>
+                            }
+
+                        </div>
+                    </div>
+                    <div class="item_right">
+                        <a href="@(guidance.Type ? $"/Tip/UpdateTip/{guidance.Id}" : $"/Recipe/UpdateRecipe/{guidance.Id}")" class="right_edit">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <button onclick="confirmDelete(@guidance.Id)" class="right_delete">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            }
+            <div class="pagination">
+                @Html.PagedListPager(Model, page => Url.Action("YourUpload", new { userId = ViewData["UserId"], page, pageSize = 5 }),
+                         new PagedListRenderOptions
+                {
+                    UlElementClasses = new[] { "pagination" },
+                    LiElementClasses = new[] { "page-item" },
+                    PageClasses = new[] { "page-link" },
+                })
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts {
+    <script>
+        function confirmDelete(guidanceId) {
+            if (confirm('Are you sure you want to delete this guidance?')) {
+                var form = document.createElement('form');
+                form.method = 'POST';
+                form.action = '/User/deleteYourUpload/' + guidanceId;
+                document.body.appendChild(form);
+                form.submit();
+            }
+        }
+    </script>
+}

@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EProject.NETCore.Models.User
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/register.css" />
+}
+<section class="register">
+    <div class="form-wrapper">
+        <h2>Register</h2>
+        <form method="post" action="/User/CreateCheckoutSession">
+            <div class="form_info">
+                <div class="form-control">
+                    <input type="text" id="username" name="Username" placeholder=" " value="@TempData["Username"]">
+                    <label>Username</label>
+                    <div class="error">
+                        <!-- Error username  -->
+                        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-control">
+                    <input type="password" id="password" name="Password" placeholder=" " value="@TempData["Password"]">
+                    <i class="fa-regular fa-eye" id="togglePassword"></i>
+                    <label>Password</label>
+                    <div class="error">
+                        <!-- Error password  -->
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-control">
+                    <input type="text" id="email" name="Email" placeholder=" " value="@TempData["Email"]">
+                    <label>Email</label>
+                    <div class="error">
+                        <!-- Error Email  -->
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-control">
+                    <input type="text" id="fullname" name="Fullname" placeholder=" " value="@TempData["Fullname"]">
+                    <label>Full Name</label>
+                    <div class="error">
+                        <!-- Error fullname  -->
+                        @Html.ValidationMessageFor(model => model.Fullname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="form_perform">
+                <div class="pay_item">
+                    <input type="radio" name="MembershipType" id="monthly" checked="checked" value="1" />
+                    <label for="monthly">10$. Monthly Subscription</label>
+                </div>
+                <div class="pay_item">
+                    <input type="radio" name="MembershipType" id="cash" value="2"/>
+                    <label for="cash">100$. Yearly Subscription</label>
+                </div>
+                <button type="submit">Register</button>
+            </div>
+        </form>
+        <p>Already a membership? <a href="/user/login">Sign in now</a></p>
+    </div>
+</section>
+@section Scripts {
+    <script src="~/js/register.js"></script>
+}

@@ -1,0 +1,160 @@
+/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main Css =======*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+body {
+    background: #000116;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.user-add {
+    width: 100%;
+    margin-top: 4rem;
+    /* background-image: url('https://assets.entrepreneur.com/content/3x2/1300/20151118190826-blend-incredients-cooking-cook-food.jpeg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+    .user-add .add_main_form {
+        padding: 20px 0px;
+        color: #fff;
+        width: 90%;
+        margin: auto;
+        background: rgba(8, 8, 8, 0.815);
+        position: relative;
+    }
+
+        .user-add .add_main_form .form_img {
+            padding: 10px 0;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            border: 1px dashed #fff;
+            flex-wrap: wrap;
+        }
+
+            .user-add .add_main_form .form_img img {
+                display: none;
+            }
+
+            .user-add .add_main_form .form_img .name_file {
+                width: 100%;
+                display: flex;
+                justify-content: center;
+            }
+
+        .user-add .add_main_form #import_form {
+            display: none;
+        }
+
+        .user-add .add_main_form .form_img .btt_file {
+            width: 100%;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .user-add .add_main_form .lb_import {
+            display: inline-block;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #ff105f, #ffad06);
+            padding: 5px 20px;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            margin-top: 10px;
+        }
+
+            .user-add .add_main_form .lb_import:active {
+                transform: scale(0.9);
+            }
+
+        .user-add .add_main_form #img_import {
+            width: 300px;
+            height: 200px;
+            object-fit: contain
+        }
+
+.add_main_form .form_info {
+    width: 100%;
+}
+
+    .add_main_form .form_info .info_name {
+        margin-top: 20px;
+        width: 100%;
+    }
+
+        .add_main_form .form_info .info_name input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .add_main_form .form_info .info_name textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            outline: none;
+            background: #333;
+            color: #fff;
+            font-size: 16px;
+            height: auto;
+            resize: none;
+        }
+
+.add_main_form .submit {
+    text-transform: uppercase;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(90deg, #ff105f, #ffad06);
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.add_main_form .title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+.for_admin {
+    position: absolute;
+    padding: 20px;
+    top: 0;
+    right: 0;
+}
+
+    .for_admin #isFreeNo {
+        margin-left: 5px;
+    }
+
+@media screen and (max-width: 950px) {
+    .for_admin {
+        position: relative;
+        top: 0;
+        right: 0;
+    }
+}

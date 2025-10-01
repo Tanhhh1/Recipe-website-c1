@@ -1,0 +1,84 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+
+@{
+    var submissions = ViewBag.Submissions as IPagedList<EProject.NETCore.Models.Submission>;
+    var competition = ViewBag.Competition as EProject.NETCore.Models.Competition;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/detailContest.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+@{
+    var notification = TempData["Notification"] as string;
+}
+
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+
+<div class="competition">
+    <div class="competition-header">
+        <a href="/contest"><i class="fa-solid fa-chevron-left"></i></a>
+        <h3>@competition.Title</h3>
+        <div></div>
+    </div>
+    <div class="detail-date">
+        <p>Start Date: @competition.StartDate.ToString("yyyy-MM-dd")</p>
+        <p>End Date: @competition.EndDate.ToString("yyyy-MM-dd")</p>
+    </div>
+    <div class="competition-des">
+        <p>Description:</p>
+        <div class="content">
+            @Html.Raw(competition.Description)
+        </div>
+    </div>
+    <div class="submissions">
+        <div class="table-responsive">
+            <p>Submissions:</p>
+            <table id="example">
+                <thead>
+                    <tr>
+                        <th>Fullname</th>
+                        <th>Email</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (submissions != null && submissions.Any())
+                    {
+                        foreach (var submission in submissions)
+                        {
+                            <tr>
+                                <td>@submission.Fullname</td>
+                                <td>@submission.Email</td>
+                                <td>@submission.Title</td>
+                                <td>@submission.CreatedDate.ToString("yyyy-MM-dd")</td>
+                                <td><a href="/detailSubmission/@submission.Id" class="btn-primary">View</a></td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5"><h3 class="no-submission">No submissions available.</h3></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if (submissions != null)
+            {
+                @Html.PagedListPager(submissions, page => Url.Action("DetailContest", new { id = competition.Id, page, pageSize = 5 }), new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" }
+    })
+            }
+        </div>
+    </div>
+</div>

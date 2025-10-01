@@ -1,0 +1,44 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@section Styles {
+    <link rel="stylesheet" href="~/css/success.css" />
+}
+@{
+    // Lấy giá trị MembershipType từ TempData
+    var membershipType = TempData["MembershipType"] as string;
+
+    // Khởi tạo biến để lưu nội dung hiển thị
+    string membershipDescription = "";
+
+    // Xử lý giá trị MembershipType
+    if (membershipType == "1")
+    {
+        membershipDescription = "Monthly Subscription";
+    }
+    else if (membershipType == "2")
+    {
+        membershipDescription = "Yearly Subscription";
+    }
+    else
+    {
+        membershipDescription = "Unknown Membership";
+    }
+}
+
+<section class="success">
+    <div class="success_main">
+        <h1>Payment Successful</h1>
+
+        <p>Your payment was successful and your subscription has been updated.</p>
+
+        <p>Username: @TempData["Username"]</p>
+        <p>Email: @TempData["Email"]</p>
+        <p>Full Name: @TempData["Fullname"]</p>
+        <p>Membership : @membershipDescription</p>
+        <p>Expiration Date: @TempData["ExpirationDate"]</p>
+        <div class="login">
+            <a href="/user/login">Go to Login -></a>
+        </div>
+    </div>
+</section>

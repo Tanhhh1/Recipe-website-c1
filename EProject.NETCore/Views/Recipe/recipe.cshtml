@@ -1,0 +1,92 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model X.PagedList.IPagedList<EProject.NETCore.Models.Guidance>
+@{
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/recipe.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+@{
+    var notification = TempData["Notification"] as string;
+}
+
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+<section class="recipe">
+    <div class="recipe_head">
+        <div class="recipe_head_name">
+            <h1>Recipes</h1>
+        </div>
+        <div class="recipe_search">
+            <form action="/recipe/search" method="get">
+                <label for="input_search">Search:</label>
+                <input type="text" id="input_search" name="input_search" class="input_search" placeholder="Search...." value="@ViewBag.InputSearch">
+
+                <input type="checkbox" name="input_free" id="input_free" class="input_check" value="1" @(ViewBag.InputFree == "1" ? "checked" : "")>
+                <label for="input_free" class="free_label">Free</label>
+
+                <input type="checkbox" name="input_premium" id="input_premium" class="input_check" value="0" @(ViewBag.InputPremium == "0" ? "checked" : "")>
+                <label for="input_premium" class="pre_label">Premium</label>
+
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>
+    <div class="recipe_main">
+        <div class="recipe_list">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var recipe in Model)
+                {
+                    <div class="item_recipe">
+                        <a href="/Recipe/RecipeDetail/@recipe.Id" class="link_recipe">
+                            <div class="menu_card">
+                                <div class="menu_image">
+                                    <img src="@recipe.Img">
+                                </div>
+                                <div class="small_card">
+                                    <p class="small_vip">@((recipe.IsFree) ? "Free" : "Vip")</p>
+                                </div>
+                                <div class="menu_info">
+                                    <p>@recipe.Title</p>
+                                </div>
+                                <div class="name_us">
+                                    <p>- @(recipe.User != null ? recipe.User.Fullname : "Unknown") -</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <p style="color: white; font-weight: bold; font-size: 30px">No Recipes Found</p>
+            }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Search", new
+            {
+                input_search = ViewBag.InputSearch,
+                input_free = ViewBag.InputFree,
+                input_premium = ViewBag.InputPremium,
+                page,
+                pageSize = 8
+            }),
+                 new PagedListRenderOptions
+        {
+            UlElementClasses = new[] { "pagination" },
+            LiElementClasses = new[] { "page-item" },
+            PageClasses = new[] { "page-link" },
+        })
+
+        <div class="load-item">
+            <button class="load-more">Load More</button>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/recipe.js"></script>
+}

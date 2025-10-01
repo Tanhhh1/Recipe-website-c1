@@ -1,0 +1,33 @@
+﻿@model EProject.NETCore.Models.User
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/changeEmail.css" />
+}
+
+<section class="user_email">
+    <div class="email_main">
+        <div class="main_title">
+            <a href="/User/UserInformation/@ViewData["UserId"]">
+                <i class="fa-solid fa-chevron-left"></i>
+            </a>
+            <p>Change Email</p>
+        </div>
+        <div class="main_form">
+            <form asp-action="ChangeEmail" asp-controller="User" method="post">
+                <div class="form_email">
+                    <label for="newEmail">New email address</label>
+                    <input type="text" name="newEmail" id="newEmail" placeholder="Enter your new email" />
+                    @Html.ValidationMessage("newEmail", "", new { @class = "text-danger" })
+                </div>
+                <div class="form_email">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter your password" />
+                    @Html.ValidationMessage("pass", "", new { @class = "text-danger" })
+                </div>
+                <div class="form_btn">
+                    <button type="submit">Change Email</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,168 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    background: #fff;
+    width: 8px;
+    border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #282f4e;
+    width: 100%;
+    border-radius: 2em;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #454f6d;
+    }
+/*----------------------------------New/Edit----------------------------------*/
+.competition {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 50px 5vw 0;
+}
+
+    .competition .competition-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #fff;
+        font-size: 2rem;
+        padding-top: 20px;
+        margin-bottom: 20px;
+    }
+
+.competition-header a i {
+    font-size: 18px;
+    color: white;
+    outline: none;
+}
+
+.competition-header .header {
+    font-weight: bold;
+    font-size: 36px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 10px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.title {
+    width: 100%;
+    height: 80px;
+    outline: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    background-color: #333;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 10px;
+    resize: none;
+}
+
+    .title::placeholder {
+        color: #fff;
+    }
+
+.form-group {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.form-group .form-txt{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.competition-text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+    .competition-text div {
+        font-size: 18px;
+        width: 100%;
+        background: #333;
+        border-radius: 4px;
+        color: #fff;
+        padding: 10px;
+    }
+
+        .competition-text div input {
+            width: 95%;
+            height: 100%;
+            background: #333;
+            border: none;
+            outline: none;
+            color: white;
+            font-size: 18px;
+        }
+
+.note-editor, .btn-sm {
+    background: #333;
+    color: #fff;
+}
+
+.panel-default > .panel-heading {
+    color: #fff;
+    background: #333;
+    border-color: #ddd;
+}
+.action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.act {
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    padding: 8px 35px 8px 35px;
+    background: #1b1b1b;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.submit {
+    margin: 20px 0 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 1028px) {
+    .competition-text div input {
+        width: 80%;
+    }
+
+    .title {
+        height: 100px;
+    }
+}
+.text-danger {
+    color: red;
+    font-weight: bold;
+    font-size: 16px;
+}

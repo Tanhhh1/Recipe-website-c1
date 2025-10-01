@@ -1,0 +1,98 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@{
+    var recipe = ViewBag.Recipe as EProject.NETCore.Models.Guidance;
+    var feedbacks = ViewBag.Feedbacks as IPagedList<EProject.NETCore.Models.Feedback>;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/recipe_detail.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+@{
+    var notification = TempData["Notification"] as string;
+}
+
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+<section class="detail">
+    <div class="detail_main">
+        <div class="title">
+            <h1>@recipe.Title</h1>
+        </div>
+        <div class="image">
+            <img class="image_title" src="@recipe.Img" alt="">
+        </div>
+        <div class="create_date">
+            <p>Created on: @recipe.CreatedDate</p>
+            @if (recipe.UpdatedDate.HasValue)
+            {
+                <p class="time_left">Update At: @recipe.UpdatedDate.Value.ToString("MM/dd/yyyy")</p>
+            }
+        </div>
+        <div class="content">
+            @Html.Raw(recipe.Content)
+        </div>
+    </div>
+    <div class="comment">
+        <div class="comment_main">
+            <div class="comment_title">
+                <h1>Comments</h1>
+            </div>
+            @if (feedbacks != null && feedbacks.Any())
+            {
+                foreach (var feedback in feedbacks)
+                {
+                    <div class="comment_item">
+                        <div class="comment_top">
+                            <div class="com_name">
+                                <p>@feedback.Fullname</p>
+                                <p class="com_mail">@feedback.Email</p>
+                            </div>
+                            <div class="com_date">
+                                <p>@feedback.CreatedDate.ToString("MM/dd/yyyy")</p>
+                            </div>
+                        </div>
+                        <div class="comment_bottom">
+                            <p>@feedback.Content</p>
+                        </div>
+                    </div>
+                }
+
+                @Html.PagedListPager(feedbacks, page => Url.Action("RecipeDetail", new { id = recipe.Id, page, pageSize = 4 }), new PagedListRenderOptions
+       {
+           UlElementClasses = new[] { "pagination" },
+           LiElementClasses = new[] { "page-item" },
+           PageClasses = new[] { "page-link" },
+       })
+            }
+            else
+            {
+                <div></div>
+            }
+        </div>
+        <div class="form_cmt">
+            <form asp-controller="Recipe" asp-action="RecipeDetail" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="@recipe.Id" />
+                <div class="form_name">
+                    <span class="name_ten">Name</span>
+                    <input type="text" class="form_input" name="fullname">
+                    @Html.ValidationMessage("fullname", "", new { @class = "text-danger" })
+                </div>
+                <div class="form_email">
+                    <span class="name_ten">Email</span>
+                    <input type="text" class="form_input" name="email">
+                    @Html.ValidationMessage("email", "", new { @class = "text-danger" })
+                </div>
+                <div class="form_content">
+                    <textarea class="form_textarea" name="content" placeholder="Comment here"></textarea>
+                    @Html.ValidationMessage("content", "", new { @class = "text-danger" })
+                </div>
+                <div class="form_submit">
+                    <button type="submit" class="submit_btn">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

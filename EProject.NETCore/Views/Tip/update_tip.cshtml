@@ -1,0 +1,175 @@
+﻿}@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model EProject.NETCore.Models.Guidance
+@{
+    bool isAdmin = ViewData["isAdmin"] != null && (bool)ViewData["isAdmin"];
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/upload_recipe.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" integrity="sha512-ZbehZMIlGA8CTIOtdE+M81uj3mrcgyrh6ZFeG33A4FHECakGrOsTPlPQ8ijjLkxgImrdmSVUHn1j+ApjodYZow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
+<div class="user-add">
+    <div class="add_main_form">
+
+        <h1 class="title">Share Your Tip</h1>
+        <form asp-controller="Tip" asp-action="UpdateTip" method="post" enctype="multipart/form-data" id="uploadForm">
+            <input type="hidden" name="guid" value="@ViewData["Guid"]" />
+            <input type="hidden" name="Img" value="@Model.Img" />
+            <div class="for_admin" style="display: @(isAdmin ? "block" : "none")">
+                <p>Is this guidance free?</p>
+                <input type="radio" id="isFreeYes" name="isFree" value="true" @(Model.IsFree ? "checked" : "") />
+                <label for="isFreeYes">Yes</label>
+
+                <input type="radio" id="isFreeNo" name="isFree" value="false" @(!Model.IsFree ? "checked" : "") />
+                <label for="isFreeNo">No</label>
+            </div>
+            <div class="form_img">
+                <div class="img_content" id="img_content">
+                    <p>Upload food photos of your tip (If available)</p>
+                </div>
+                <img src="@Model.Img" alt="" id="img_import">
+                <div class="name_file">
+                    <p id="name_file_p"></p>
+                </div>
+                <!-- IMG here -->
+                <div class="btt_file">
+                    <input type="file" id="import_form" accept="image/*" >
+                    <label for="import_form" class="lb_import"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload file</label>
+                </div>
+            </div>
+            @Html.ValidationMessageFor(model => model.Img, "", new { @class = "text-danger" })
+            <div class="form_info">
+                <div class="info_name">
+                    <p>Enter tip title</p>
+                    <input type="text" id="recipe_name" class="input_name" placeholder="Tip title" name="title" value="@Model.Title">
+                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <div id="summernote"></div>
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+            <button type="submit" class="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js" integrity="sha512-lVkQNgKabKsM1DA/qbhJRFQU8TuwkLF2vSN3iU/c7+iayKs08Y8GXqfFxxTZr1IcpMovXnf2N/ZZoMgmZep1YQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/js/upload_recipe.js"></script>
+    <script>
+        $(document).ready(function () {
+            var submitClicked = false;
+            $('#summernote').summernote({
+                placeholder: 'Hello stand alone ui',
+                tabsize: 2,
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'italic', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['color', ['color']],
+                    ['fontsize', ['fontsize']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['height', ['height']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'help']]
+                ],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                callbacks: {
+                    onImageUpload: function (files) {
+                        for (var i = 0; i < files.length; i++) {
+                            uploadImage(files[i]);
+                        }
+                    }
+                }
+
+            });
+            $('div.note-group-image-url').remove();
+            var newCss = {};
+            newCss.backgroundColor = '#333';
+            newCss.color = '#fff';
+            $('.note-editable').css(newCss);
+            $('#summernote').summernote('code', `@Html.Raw(Model.Content)`);
+
+            function uploadImage(file) {
+                var formData = new FormData();
+                formData.append("uploadedFiles", file);
+                formData.append("guid", $('#uploadForm input[name=guid]').val());
+                $.ajax({
+                    data: formData,
+                    type: "POST",
+                    url: '/Tip/UploadFile',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        var fileUrl = response.path;
+                        var imgNode = document.createElement('img');
+                        imgNode.src = fileUrl;
+                        $('#summernote').summernote('insertNode', imgNode);
+                    },
+                    error: function (data) {
+                        alert(data.responseText);
+                    }
+                });
+            }
+            function uploadTipImg(file) {
+                var formData = new FormData();
+                formData.append("uploadedFiles", file);
+                formData.append("guid", $('#uploadForm input[name=guid]').val());
+                $.ajax({
+                    data: formData,
+                    type: "POST",
+                    url: '/Tip/UploadFile',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        var fileUrl = response.path;
+                        $('input[name="Img"]').val(fileUrl);
+                    },
+                    error: function (data) {
+                        alert(data.responseText);
+                    }
+                });
+            }
+            $('#import_form').on('change', function () {
+                var file = this.files[0];
+                if (file) {
+                    uploadTipImg(file);
+                }
+            });
+            $('#uploadForm').on('submit', function (event) {
+                submitClicked = true;
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'content',
+                    value: $('#summernote').summernote('code')
+                }).appendTo('#uploadForm');
+
+            });
+
+
+
+
+
+            $(window).on('beforeunload', function () {
+                if (!submitClicked) {
+                    var guid = $('#uploadForm input[name=guid]').val();
+                    if (guid) {
+                        var data = JSON.stringify({ guid: guid });
+                        var blob = new Blob([data], { type: 'application/json' });
+                        navigator.sendBeacon('/Tip/DeleteTempImages', blob);
+                        console.log('Image deletion request sent for GUID:', guid);
+                    }
+                }
+            });
+
+
+        });
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@section Styles {
+    <link rel="stylesheet" href="~/css/notification.css" />
+}
+@model string
+
+@if (!string.IsNullOrEmpty(Model))
+{
+    <section class="notification">
+        <div class="notification_main">
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <div class="notification_content">
+                <p>@Model</p>
+            </div>
+            <button class="close-button btn-red" onclick="closeNotification()">Close</button>
+
+        </div>
+    </section>
+}
+<script>
+    function closeNotification() {
+        const notificationMain = document.querySelector('.notification');
+        notificationMain.style.display = 'none';
+    }
+</script>

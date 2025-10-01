@@ -1,0 +1,175 @@
+﻿/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main Css =======*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+body {
+    background: #000116;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.info_user {
+    width: 100%;
+    height: 100%;
+    padding: 6rem 0;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+    .info_user .info_main {
+        width: 90%;
+        margin: auto;
+        background: #4d4c4c;
+    }
+
+.info_main .main_title {
+    width: 30%;
+    color: #fff;
+    font-weight: bold;
+    font-size: 2vw;
+    padding: 20px 0 0 20px;
+    text-transform: uppercase;
+}
+
+.info_user .info_main form {
+    display: flex;
+}
+
+.info_main .info_left {
+    width: 35%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+    .info_main .info_left a {
+        color: #fff;
+        line-height: 3em;
+        font-size: 1.1vw;
+        text-decoration: none;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+        .info_main .info_left a:hover {
+            background-color: #867f7f;
+        }
+
+.info_main .info_right {
+    position: relative;
+    width: 65%;
+    margin: auto;
+    padding: 0 20px;
+    padding-bottom: 40px;
+}
+
+    .info_main .info_right::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 20px;
+        left: 0;
+        width: 3px;
+        background: #fff;
+    }
+
+@media screen and (max-width: 800px) {
+    .info_main .info_right {
+        padding: 0 20px;
+        padding-bottom: 40px;
+    }
+}
+
+.info_main .info_right input {
+    padding: 10px;
+    border: 1px solid #000116;
+    width: 100%;
+    background-color: #d6d5d5;
+    outline: none;
+    border-radius: 3px;
+    font-size: 16px;
+    font-size: 1.1vw;
+}
+
+    .info_main .info_right input#expirationDate, .info_main .info_right input#email, .info_main .info_right input#password, .info_main .info_right input#role{
+        background-color: grey;
+    }
+
+    .info_main .info_right label {
+        font-weight: bold;
+        color: #e0e0e0;
+        font-size: 18px;
+        display: block;
+        margin-top: 20px;
+        font-size: 1.1vw;
+    }
+
+.info_main .info_right .info_save button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: linear-gradient(90deg, #ff105f, #ffad06);
+    ;
+    color: #fff;
+    font-size: 1.1vw;
+    cursor: pointer;
+    margin-top: 20px;
+    border-radius: 3px;
+    outline: none;
+}
+
+.info_user {
+    font-size: clamp(12px, 2vw, 16px);
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+@keyframes gradientCircle {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    25% {
+        background-position: 100% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    75% {
+        background-position: 0% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+@keyframes colorChange {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+
+    100% {
+        filter: hue-rotate(360deg);
+    }
+}
+
+

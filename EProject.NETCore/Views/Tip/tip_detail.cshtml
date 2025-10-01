@@ -1,0 +1,38 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@{
+    var tip = ViewBag.Tip as EProject.NETCore.Models.Guidance;
+    var feedbacks = ViewBag.Feedbacks as IPagedList<EProject.NETCore.Models.Feedback>;
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/recipe_detail.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+@{
+    var notification = TempData["Notification"] as string;
+}
+
+@if (!string.IsNullOrEmpty(notification))
+{
+    @Html.Partial("notification", notification)
+}
+<section class="detail">
+    <div class="detail_main">
+        <div class="title">
+            <h1>@tip.Title</h1>
+        </div>
+        <div class="image">
+            <img class="image_title" src="@tip.Img" alt="">
+        </div>
+        <div class="create_date">
+            <p>Created on: @tip.CreatedDate</p>
+            @if (tip.UpdatedDate.HasValue)
+            {
+                <p>Update At: @tip.UpdatedDate.Value.ToString("MM/dd/yyyy")</p>
+            }
+        </div>
+        <div class="content">
+            @Html.Raw(tip.Content)
+        </div>
+    </div>
+</section>

@@ -1,0 +1,186 @@
+﻿/*======= Google fonts =======*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*======= Main Css =======*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+body {
+    background: #000116;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.contest {
+    padding-top: 4rem;
+    width: 100%;
+    height: 100%;
+    /* min-height: 100vh; */
+}
+
+    .contest .contest_main {
+        width: 90%;
+        margin: auto;
+        padding-bottom: 30px;
+        height: 100%;
+    }
+
+.contest_main .contest_name {
+    color: #fff;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 1.5em;
+}
+
+.contest_main .contest_tool {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    padding: 0 20px;
+    margin-bottom: 1rem;
+}
+
+.contest_tool .tool_add {
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+    .contest_tool .tool_add a {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        text-decoration: none;
+        height: 100%;
+        font-weight: 500;
+        color: #fff;
+    }
+
+        .contest_tool .tool_add a:hover {
+            text-decoration: underline;
+        }
+
+.contest_list {
+    margin-top: 20px
+}
+
+    .contest_list .list_ct {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        border-bottom: 1px solid #000116;
+        background-color: rgb(94, 92, 92);
+        margin-bottom: 5px;
+    }
+
+.list_ct .ct_left .left_name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000116;
+}
+
+.list_ct .ct_left .contest-time {
+    font-size: 1.0rem;
+    margin-top: 5px;
+    color: transparent;
+    font-weight: bold;
+    background: linear-gradient(90deg, #ff105f, #ffad06);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.ct_right {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .ct_right .right_btt {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ct_right .right_btn {
+        padding: 5px 10px;
+        background: linear-gradient(90deg, #ff105f, #ffad06);
+        color: #fff;
+        border: 1px solid #ff105f;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.0rem;
+        margin-left: 10px;
+        text-decoration: none;
+        transition: all ease 0.3s;
+    }
+
+    .ct_right .btt_still {
+        display: none;
+        display: flex;
+    }
+
+        .ct_right .btt_still .time_remaining {
+            color: transparent;
+            font-weight: bold;
+            user-select: none;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, #f185a9, #41d5e9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+    .ct_right .right_btn:hover {
+        background: none;
+        text-decoration: none;
+    }
+
+    .ct_right .btt_expired {
+        display: none;
+    }
+
+    .ct_right .btt_none {
+        padding: 5px 10px;
+        font-size: 1.0rem;
+        background: #a39f9f;
+        border-radius: 5px;
+        color: #000116;
+        outline: none;
+        margin-left: 10px;
+    }
+
+    .ct_right .btt_admin button {
+        outline: none;
+        padding: 4px 10px;
+        background: linear-gradient(90deg, #ff105f, #ffad06);
+        color: #fff;
+        border: 1px solid #ff105f;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.0rem;
+        margin-left: 10px;
+        text-decoration: none;
+        transition: all ease 0.3s;
+    }
+
+        .ct_right .btt_admin button:hover {
+            background: none;
+        }
+
+
+

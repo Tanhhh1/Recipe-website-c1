@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JamesThew</title>
+    <link rel="stylesheet" href="~/css/navbar.css" />
+    <link rel="stylesheet" href="~/css/footer.css" />
+    <link rel="stylesheet" href="~/css/notification.css" />
+    @RenderSection("Styles", required: false)
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+    @{
+        var isLoggedIn = HttpContextAccessor.HttpContext.Session.GetString("UserID") != null;
+        var fullName = HttpContextAccessor.HttpContext.Session.GetString("FullName");
+        var id = HttpContextAccessor.HttpContext.Session.GetString("UserID");
+    }
+    <!-- Navbar -->
+    <header>
+        <div class="nav-bar">
+            <a href="/" class="logo">James Thew</a>
+            <div class="navigation">
+                <div class="nav-items">
+                    <i class="fa-solid fa-xmark nav-close-btn"></i>
+                    <a href="/" class="item-home the"><i class="fa-solid fa-house"></i> Home</a>
+                    <a href="/recipe" class="item-recipes the"><i class="fa-solid fa-utensils"></i> Recipes</a>
+                    <a href="/tip" class="item-tips the"><i class="fa-solid fa-wand-magic-sparkles"></i> Tips</a>
+                    <a href="/contest" class="item-contest the"><i class="fa-solid fa-trophy"></i> Contests</a>
+                    <div class="nav-clc">
+                        <button class="the"><i class="fa-solid fa-bullhorn"></i> Upload <i class="fa-solid fa-chevron-down drop"></i></button>
+                        <div class="nav-menu">
+                            <a href="/recipe/uploadrecipe" class="item-faq the">Upload recipes</a>
+                            <a href="/tip/uploadtip" class="item-faq the">Upload tips</a>
+                        </div>
+                    </div>
+                    <a href="/Home/announcements" class="item-announcements the"><i class="fa-solid fa-bullhorn"></i> Announcements </a>
+                    <a href="/Home/FAQ" class="item-faq the"><i class="fa-regular fa-circle-question"></i> FAQs</a>
+                    @if (!isLoggedIn)
+                    {
+                        <a href="/user/login" class="item-login the"> Login</a>
+                    }
+                    else
+                    {
+                        <div class="nav-clc">
+                            <a href="/User/UserInformation/@id" class="item-announcements the">@fullName</a>
+                            <div class="nav-menu">
+                                <a href="/User/UserInformation/@id" class="item-feedback the"><i class="fa-solid fa-circle-user"></i> Account</a>
+                                <a class="item-faq the" asp-action="yourUpload" asp-controller="User" asp-route-userId="@id"><i class="fa-solid fa-arrow-up-from-bracket"></i> Uploaded</a>
+                                <a href="/User/Logout" class="item-faq the"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <i class="fa-solid fa-bars nav-menu-btn"></i>
+        </div>
+        <div class="scroll-indicator-container">
+            <div class="scroll-indicator-bar"></div>
+        </div>
+    </header>
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <section class="footer">
+        <div class="footer_main">
+            <div class="ft_link">
+                <a href="https://www.facebook.com/gordonramsay"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://www.youtube.com/gordonramsay"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://instagram.com/gordongram/"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://twitter.com/gordonramsay"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+            <div class="ft_name">
+                <p>James Thew Restaurants</p>
+            </div>
+        </div>
+    </section>
+    <script src="~/js/navbar.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

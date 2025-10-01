@@ -1,0 +1,111 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    position: relative;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #000;
+    color: #fff;
+}
+
+::-webkit-scrollbar {
+    background: #fff;
+    width: 8px;
+    border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #282f4e;
+    width: 100%;
+    border-radius: 2em;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #454f6d;
+    }
+/*----------------------------------------------------------*/
+.competition {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 50px 5vw 0;
+}
+
+.detail-date {
+    display: flex;
+    gap: 3em;
+    color: #9b9898ef;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.info-submissions div {
+    display: flex;
+    gap: 0.3em;
+    font-size: 18px;
+    margin-top: 10px
+}
+
+    .info-submissions div p {
+        font-weight: bold;
+    }
+
+.competition-content p{
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.competition-content span {
+    font-size: 18px;
+}
+
+.competition .competition-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 2rem;
+    padding-top: 20px;
+}
+
+.competition-header a i {
+    font-size: 18px;
+    color: white;
+    outline: none;
+}
+
+.competition-header h1 {
+    font-weight: bold;
+}
+
+
+
+.act {
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    padding: 8px 35px 8px 35px;
+    background: #1b1b1b;
+    text-transform: capitalize;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.submit {
+    margin: 20px 0 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 780px) {
+    .competition-recipe img, .competition-tips img {
+        width: 100%;
+    }
+}

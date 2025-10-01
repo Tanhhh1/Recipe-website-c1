@@ -1,0 +1,59 @@
+﻿@using X.PagedList.Mvc.Core
+@using X.PagedList
+@model IPagedList<dynamic>
+@{
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/announcement.css" />
+    <link rel="stylesheet" href="~/css/paging.css" />
+}
+<section class="announcement">
+    <div class="announ_main">
+        <div class="announ_name">
+            <h1>Announcement</h1>
+        </div>
+        <div class="announ_win">
+            <img src="https://cdn2.iconfinder.com/data/icons/ancient-rome/154/laurels-winner-512.png" alt="">
+            <p>Mr. James Thew</p>
+        </div>
+
+        <!-- List Winner -->
+        <div class="announ_list">
+            <!-- Item -->
+            @foreach (var item in Model)
+            {
+                <div class="announ_item">
+                    <div class="item_left">
+                        <div class="left_name">
+                            <i class="fa-solid fa-trophy"></i><span>@item.WinnerFullname</span>
+                        </div>
+                        <!-- Name contest -->
+                        <div class="left_contest">
+                            <p>@item.CompetitionTitle</p>
+                        </div>
+                        <!-- Thời gian diễn ra -->
+                        <div class="left_time">
+                            <p>Time: <span class="contest-time">@item.StartDate.ToString("yyyy-MM-dd") - @item.EndDate.ToString("yyyy-MM-dd")</span></p>
+                        </div>
+                    </div>
+                    <!-- Ngày công bố thắng -->
+                    <div class="item_right">
+                        <span class="contest-time">Winner @item.Date.ToString("yyyy-MM-dd")</span>
+                    </div>
+                </div>
+            }
+            <!-- Item -->
+        </div>
+    </div>
+    @Html.PagedListPager(Model, page => Url.Action("Announcements", new { page, pageSize = Model.PageSize }),
+            new PagedListRenderOptions
+    {
+        UlElementClasses = new[] { "pagination" },
+        LiElementClasses = new[] { "page-item" },
+        PageClasses = new[] { "page-link" },
+    })
+</section>
+
+@section Scripts {
+    <script src="~/js/announ.js"></script>
+}

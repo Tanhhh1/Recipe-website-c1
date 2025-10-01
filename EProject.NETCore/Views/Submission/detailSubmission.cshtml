@@ -1,0 +1,39 @@
+﻿@{
+}
+@model EProject.NETCore.Models.Submission;
+@section Styles {
+    <link rel="stylesheet" href="~/css/detailSubmission.css" />
+}
+
+<div class="competition">
+    <div class="competition-header">
+        <a href="/contest"><i class="fa-solid fa-chevron-left"></i></a>
+        <h3>@Model.Title</h3>
+        <div></div>
+    </div>
+    <div class="detail-date">
+        <p>Date: @Model.CreatedDate.ToString("MM/dd/yyyy")</p>
+    </div>
+    <div class="info-submissions">
+        <div class="name">
+            <p>Fullname:</p><span>@Model.Fullname</span>
+        </div>
+        <div class="mail">
+            <p>Email:</p><span>@Model.Email</span>
+        </div>
+    </div>
+    <div class="competition-content">
+        <p>Content</p>
+        <div class="content">
+            <span>
+                @Html.Raw(Model.Content)
+            </span>
+        </div>
+    </div>
+    <div class="submit">
+        <form asp-controller="Submission" asp-action="IsWinner">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button class="act" type="submit">Is The Winner of The Contest</button>
+        </form>  
+    </div>
+</div>

@@ -1,0 +1,145 @@
+﻿@model EProject.NETCore.Models.Competition;
+@section Styles {
+    <link rel="stylesheet" href="~/css/newContest.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" integrity="sha512-ZbehZMIlGA8CTIOtdE+M81uj3mrcgyrh6ZFeG33A4FHECakGrOsTPlPQ8ijjLkxgImrdmSVUHn1j+ApjodYZow==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+}
+
+
+<div class="competition">
+    <div class="competition-header">
+        <a href="/Contest"><i class="fa-solid fa-chevron-left"></i></a>
+        <h3 class="header">New Competition</h3>
+        <div></div>
+    </div>
+ 
+    <form asp-controller="Contest" asp-action="NewContest" method="post"  id="uploadForm">
+        <input type="hidden" name="guid" value="@ViewData["Guid"]" />
+        <div>
+            <span asp-validation-for="Title" class="text-danger"></span>
+            <textarea type="text" asp-for="Title" id="" class="title" placeholder="Enter title of contest..."></textarea>
+        </div>
+        <div class="form-group">
+            <p class="form-txt">Date Time: @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" }) <span asp-validation-for="EndDate" class="text-danger"></span></p>
+            <div class="competition-text">
+                <div>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <input id="StartDatePicker" class="date-time" placeholder="Start Date">
+                    <input type="hidden" asp-for="StartDate" id="StartDate" value="@DateTime.MinValue">
+                </div>
+                <span>To</span>
+                <div>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <input id="EndDatePicker" class="date-time" placeholder="End Date">
+                    <input type="hidden" asp-for="EndDate" id="EndDate" value="@DateTime.MinValue">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <p class="form-txt">Description: <span asp-validation-for="Description" class="text-danger"></span></p>
+            <div id="summernote"></div>
+        </div>
+        <div class="submit">
+            <button class="act" type="submit">Create New Competition</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.js" integrity="sha512-lVkQNgKabKsM1DA/qbhJRFQU8TuwkLF2vSN3iU/c7+iayKs08Y8GXqfFxxTZr1IcpMovXnf2N/ZZoMgmZep1YQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr("#StartDatePicker", {
+            onChange: function (selectedDates, dateStr, instance) {
+                $('#StartDate').val(dateStr);
+            }
+        });
+        flatpickr("#EndDatePicker", {
+            onChange: function (selectedDates, dateStr, instance) {
+                $('#EndDate').val(dateStr);
+            }
+        });
+
+
+
+        $(document).ready(function () {
+            var submitClicked = false;
+            $('#summernote').summernote({
+                placeholder: 'Hello stand alone ui',
+                tabsize: 2,
+                height: 450,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'italic', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['color', ['color']],
+                    ['fontsize', ['fontsize']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['height', ['height']],
+                    ['insert', ['link', 'picture']],
+                    ['view', ['fullscreen', 'help']]
+                ],
+                styleTags: ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+                callbacks: {
+                    onImageUpload: function (files) {
+                        for (var i = 0; i < files.length; i++) {
+                            uploadImage(files[i]);
+                        }
+                    }
+                }
+
+            });
+            $('div.note-group-image-url').remove();
+            var newCss = {};
+            newCss.backgroundColor = '#333';
+            newCss.color = '#fff';
+            $('.note-editable').css(newCss);
+            $('#summernote').summernote('code', `@Html.Raw(ViewData["Description"])`);
+
+            function uploadImage(file) {
+                var formData = new FormData();
+                formData.append("uploadedFiles", file);
+                formData.append("guid", $('#uploadForm input[name=guid]').val());
+                $.ajax({
+                    data: formData,
+                    type: "POST",
+                    url: '/Contest/UploadFile',
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        var fileUrl = response.path;
+                        var imgNode = document.createElement('img');
+                        imgNode.src = fileUrl;
+                        $('#summernote').summernote('insertNode', imgNode);
+                    },
+                    error: function (data) {
+                        alert(data.responseText);
+                    }
+                });
+            }
+            $('#uploadForm').on('submit', function (event) {
+                submitClicked = true;
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'description',
+                    value: $('#summernote').summernote('code')
+                }).appendTo('#uploadForm');
+
+            });
+            $(window).on('beforeunload', function () {
+                if (!submitClicked) {
+                    var guid = $('#uploadForm input[name=guid]').val();
+                    if (guid) {
+                        var data = JSON.stringify({ guid: guid });
+                        var blob = new Blob([data], { type: 'application/json' });
+                        navigator.sendBeacon('/Contest/DeleteTempImages', blob);
+                        console.log('Image deletion request sent for GUID:', guid);
+                    }
+                }
+            });
+        });
+    </script>
+}
